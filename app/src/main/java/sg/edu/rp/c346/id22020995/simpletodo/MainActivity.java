@@ -3,6 +3,7 @@ package sg.edu.rp.c346.id22020995.simpletodo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -72,14 +74,22 @@ public class MainActivity extends AppCompatActivity {
                         // add button enabled, delete button disabled
                         btnAdd.setEnabled(true);
                         btnDelete.setEnabled(false);
+                        // change hint and empty input
                         etTask.setHint("Type in a new task here");
+                        etTask.setText("");
+                        // change input type to text
+                        etTask.setInputType(InputType.TYPE_CLASS_TEXT);
                         break;
                     case 1:
                         // delete task selected
                         // add button disabled, delete button enabled
                         btnAdd.setEnabled(false);
                         btnDelete.setEnabled(true);
+                        // change hint and empty input
                         etTask.setHint("Type in the index of the task to be removed");
+                        etTask.setText("");
+                        // change input type to number
+                        etTask.setInputType(InputType.TYPE_CLASS_NUMBER);
                         break;
                 }
             }
@@ -94,10 +104,27 @@ public class MainActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // get position integer and remove the item in that position
-                int posInput = Integer.parseInt(etTask.getText().toString());
-                alTasks.remove(posInput);
-                aaTasks.notifyDataSetChanged();
+                if (alTasks.size() != 0) {
+                    // if arrayList is not empty
+                    // get position integer
+                    int posInput = Integer.parseInt(etTask.getText().toString());
+                    if (posInput<(alTasks.size())) {
+                        // if posInput is < alTask size (object exists in arrayList)
+                        alTasks.remove(posInput);
+                        aaTasks.notifyDataSetChanged();
+                        etTask.setText("");
+                    } else {
+                        // if posInput is > alTask size (object does not exist in arrayList)
+                        Toast toast = Toast.makeText(MainActivity.this, "Wrong index number", Toast.LENGTH_SHORT);
+                        toast.show();
+                        etTask.setText("");
+                    }
+                } else {
+                    // if arrayList is empty
+                    Toast toast = Toast.makeText(MainActivity.this, "You do not have any task to remove", Toast.LENGTH_SHORT);
+                    toast.show();
+                    etTask.setText("");
+                }
             }
         });
     }
