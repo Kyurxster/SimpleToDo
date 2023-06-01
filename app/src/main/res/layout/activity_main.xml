@@ -5,6 +5,12 @@
     android:orientation="vertical">
 
 
+    <Spinner
+        android:id="@+id/spinnerAddDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/spinnerAddDeleteItems" />
+
     <EditText
         android:id="@+id/editTextTask"
         android:layout_width="match_parent"
@@ -22,7 +28,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:enabled="true"
             android:text="@string/btnAdd" />
+
+        <Button
+            android:id="@+id/buttonDelete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="@string/btnDelete" />
 
         <Button
             android:id="@+id/buttonClear"

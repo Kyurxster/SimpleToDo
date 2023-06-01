@@ -2,4 +2,9 @@
     <string name="app_name">Simple To Do</string>
     <string name="btnAdd">ADD</string>
     <string name="btnClear">CLEAR</string>
+    <string name="btnDelete">DELETE</string>
+    <string-array name="spinnerAddDeleteItems">
+        <item>Add a new task</item>
+        <item>Remove a task</item>
+    </string-array>
 </resources>
