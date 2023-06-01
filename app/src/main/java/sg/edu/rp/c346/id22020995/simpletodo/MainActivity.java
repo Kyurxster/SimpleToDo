@@ -45,5 +45,16 @@ public class MainActivity extends AppCompatActivity {
                 etTask.setText("");
             }
         });
+
+        // set OnClickListener for btnClear
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // set everything to empty/cleared
+                etTask.setText("");
+                alTasks.clear();
+                aaTasks.notifyDataSetChanged();
+            }
+        });
     }
 }
