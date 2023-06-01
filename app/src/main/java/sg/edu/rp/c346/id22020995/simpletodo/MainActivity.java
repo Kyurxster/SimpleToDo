@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -46,10 +47,15 @@ public class MainActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String taskInput = etTask.getText().toString();
-                alTasks.add(taskInput);
-                aaTasks.notifyDataSetChanged();
-                etTask.setText("");
+                if (TextUtils.isEmpty(etTask.getText().toString())){
+                    Toast toast = Toast.makeText(MainActivity.this, "Please enter a task", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    String taskInput = etTask.getText().toString();
+                    alTasks.add(taskInput);
+                    aaTasks.notifyDataSetChanged();
+                    etTask.setText("");
+                }
             }
         });
 
@@ -86,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
                         btnAdd.setEnabled(false);
                         btnDelete.setEnabled(true);
                         // change hint and empty input
-                        etTask.setHint("Type in the index of the task to be removed");
                         etTask.setText("");
+                        etTask.setHint("Type in the index of the task to be removed");
                         // change input type to number
                         etTask.setInputType(InputType.TYPE_CLASS_NUMBER);
                         break;
@@ -104,26 +110,31 @@ public class MainActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (alTasks.size() != 0) {
-                    // if arrayList is not empty
-                    // get position integer
-                    int posInput = Integer.parseInt(etTask.getText().toString());
-                    if (posInput<(alTasks.size())) {
-                        // if posInput is < alTask size (object exists in arrayList)
-                        alTasks.remove(posInput);
-                        aaTasks.notifyDataSetChanged();
-                        etTask.setText("");
+                if (TextUtils.isEmpty(etTask.getText().toString())){
+                    Toast toast = Toast.makeText(MainActivity.this, "Please enter an index", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    if (alTasks.size() != 0) {
+                        // if arrayList is not empty
+                        // get position integer
+                        int posInput = Integer.parseInt(etTask.getText().toString());
+                        if (posInput<(alTasks.size())) {
+                            // if posInput is < alTask size (object exists in arrayList)
+                            alTasks.remove(posInput);
+                            aaTasks.notifyDataSetChanged();
+                            etTask.setText("");
+                        } else {
+                            // if posInput is > alTask size (object does not exist in arrayList)
+                            Toast toast = Toast.makeText(MainActivity.this, "Wrong index number", Toast.LENGTH_SHORT);
+                            toast.show();
+                            etTask.setText("");
+                        }
                     } else {
-                        // if posInput is > alTask size (object does not exist in arrayList)
-                        Toast toast = Toast.makeText(MainActivity.this, "Wrong index number", Toast.LENGTH_SHORT);
+                        // if arrayList is empty
+                        Toast toast = Toast.makeText(MainActivity.this, "You do not have any task to remove", Toast.LENGTH_SHORT);
                         toast.show();
                         etTask.setText("");
                     }
-                } else {
-                    // if arrayList is empty
-                    Toast toast = Toast.makeText(MainActivity.this, "You do not have any task to remove", Toast.LENGTH_SHORT);
-                    toast.show();
-                    etTask.setText("");
                 }
             }
         });
